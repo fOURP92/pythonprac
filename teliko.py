@@ -1,4 +1,4 @@
-#Caesar cipher decryption script.
+#Caesar cipher decryption & encryption script.
 
 import os
 import string
