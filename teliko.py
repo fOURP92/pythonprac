@@ -1,4 +1,4 @@
-#Caesar cipher decryption & encryption script.
+#Caesar cipher decryption and encryption script.
 
 import os
 import string
@@ -21,7 +21,6 @@ while choice:
         filex = open(filew)
         print('Key should be between 1-25.') #25 possible ROTs.
         key = int(input('Enter the key: ')) #the number user picks.
-        finalenc = ""
         lines = filex.readlines() #read lines
         #print(lines)
         linesstr = ''.join(lines) #list of lines to str
@@ -31,16 +30,17 @@ while choice:
         #print(wordslen)
         finaldec = ""
 
+        
         for x in range(len(wordsw)): #loops the lines
             for gg in range(wordslen[x]):
                                             
                 character = wordsw[x][gg]
-                if (alphabetlower.find(character) >= 0):
+                if (alphabetlower.find(character) >= 0):  #if character is lower swap.
                     location = alphabetlower.find(character)
                     new_location = (location - key ) % len(alphabetlower)
                     finaldec += alphabetlower[new_location]
                 else:
-                    location = alphabetupper.find(character)
+                    location = alphabetupper.find(character)   #if character is UPPER swap.
                     new_location = (location - key ) % len(alphabetupper)
                     finaldec += alphabetupper[new_location]
 
@@ -50,10 +50,10 @@ while choice:
         break
 
     elif choice == '2':
-            ocrh = input('Enter the path of the text file you want decrypted: ') #user inputs path for the file he wants.
-            ocr = open(ocrh)
+            filew = input('Enter the path of the text file you want decrypted: ') #user inputs path for the file he wants.
+            filex = open(filew)
 
-            lines = ocr.readlines() #read lines
+            lines = filex.readlines() #read lines
             #print(lines)
             linesstr = ''.join(lines) #list of lines to str
             linesstr = re.sub('[^0-9a-zA-Z ]+', '', linesstr) #removes all non alnum chars.
@@ -72,19 +72,19 @@ while choice:
                         character = wordsw[x][gg]
                         
 
-                        if (alphabetlower.find(character) >= 0):
+                        if (alphabetlower.find(character) >= 0):   #if character is lower swap.
                             location = alphabetlower.find(character)
                             new_location = (location - j + 1 ) % len(alphabetlower)
                             finaldec += alphabetlower[new_location]
                         else:
-                            location = alphabetupper.find(character)
+                            location = alphabetupper.find(character)       #if character is UPPER swap.
                             new_location = (location - j + 1 ) % len(alphabetupper)
                             finaldec += alphabetupper[new_location]
-            
+                                        
                     print(finaldec)
                     #time.sleep( 0.5 )
                     finaldec = ""
-                ocr.close()
+                filex.close()
             break
     else:
         print('Invalid input, you have to select between 1(Encrypt) or 2(Decrypt)!')
