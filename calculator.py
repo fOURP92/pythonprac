@@ -8,7 +8,7 @@ expression = ""
 choice = True
 var = tk.StringVar()
 var_entry = tk.Entry(window , text = 'var', textvariable = var)
-var_entry.grid(row = 0, column = 0, columnspan = 10)
+var_entry.grid(row = 0, column = 0, ipadx = 38, columnspan = 4)
 var_entry.focus()
 var.set(expression)
 def press(num):
@@ -64,11 +64,3 @@ btnEquals = tk.Button(window, text = '=' , command = equals, height = 1, width =
 btnEquals.grid(row = 5, column = 0)
  
 window.mainloop()
-
-
-      
-
-
-
-
-
