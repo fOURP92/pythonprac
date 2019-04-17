@@ -6,6 +6,7 @@ pygame.init()
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
+green = (0, 155, 0)
 
 display_width = 800
 display_height = 600
@@ -17,6 +18,11 @@ clock = pygame.time.Clock()
 block_size = 10
 FPS = 30
 font = pygame.font.SysFont(None, 25)
+
+def snake(block_size, snakeList):
+    for XnY in snakeList:
+        pygame.draw.rect(gameDisplay, green, [XnY[0], XnY[1], block_size, block_size])
+
 
 def message_to_screen(msg, color):
     screen_text = font.render(msg, True, color)
@@ -30,6 +36,8 @@ def gameLoop():
     lead_y = display_height / 2
     lead_x_change = 0
     lead_y_change = 0
+    snakeList = []
+    snakeLength = 1
     randAppleX = round(random.randrange(0, display_width - block_size) / 10.0) * 10.0
     randAplleY = round(random.randrange(0, display_height - block_size) / 10.0) * 10.0
 
@@ -77,11 +85,30 @@ def gameLoop():
 
         gameDisplay.fill(white)
         pygame.draw.rect(gameDisplay, red, [randAppleX, randAplleY, block_size, block_size])
-        pygame.draw.rect(gameDisplay, black, [lead_x, lead_y, block_size, block_size])
+
+        
+        snakeHead = []
+        snakeHead.append(lead_x)
+        snakeHead.append(lead_y)
+        snakeList.append(snakeHead)
+        snake(block_size, snakeList)
+        
+        if len(snakeList) > snakeLength:
+            del snakeList[0]
+
+        for eachSegment in snakeList[:-1]: #crashing onto ourselves
+            if eachSegment == snakeHead:
+                gameOver = True
+
+
         pygame.display.update()
 
-        if lead_x == randAppleX and lead_y == randAplleY:
-            print("om nom nom")
+        if lead_x == randAppleX and lead_y == randAplleY: #eating apples
+            randAppleX = round(random.randrange(0, display_width - block_size) / 10.0) * 10.0
+            randAplleY = round(random.randrange(0, display_height - block_size) / 10.0) * 10.0
+            snakeLength += 1
+
+            
         clock.tick(FPS)
 
     pygame.quit()
